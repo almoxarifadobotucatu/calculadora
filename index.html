@@ -143,5 +143,26 @@ function calcular() {
     resultEl.textContent = `Data inicial retroativa (45 dias úteis): ${currentDate.toLocaleDateString('pt-BR')}`;
 }
 </script>
+    <footer>
+  <p>© <span id="ano"></span>. Todos os direitos reservados.</p>
+</footer>
+
+<style>
+  footer {
+    position: fixed;
+    bottom: 2px;
+    right: 5px;
+    font-size: 0.6rem;
+    color: #777;
+    font-family: Arial, sans-serif;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  document.getElementById('ano').textContent = new Date().getFullYear();
+</script>
+
 </body>
 </html>
