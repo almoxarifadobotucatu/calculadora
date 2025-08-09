@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora Retroativa de 45 Dias Úteis</title>
+<style>
+:root {
+    --primary-color: #0a66c2;
+    --primary-hover-color: #004182;
+    --danger-color: #e53e3e;
+    --danger-hover-color: #c53030;
+    --background-light: #1a1a2e;
+    --background-white: #16213e;
+    --text-dark: #ffffff;
+    --text-medium: #b8b8b8;
+    --border-light: #2a2a3a;
+    --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    background-color: var(--background-light);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+    color: var(--text-dark);
+}
+
+.container {
+    background-color: var(--background-white);
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: var(--shadow-light);
+    max-width: 550px;
+    width: 100%;
+    text-align: center;
+}
+
+h1 {
+    color: var(--text-dark);
+    margin-bottom: 30px;
+    font-size: 2.4rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--text-medium);
+    font-size: 1.4rem;
+}
+
+input {
+    width: 100%;
+    padding: 18px;
+    font-size: 1.4rem;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    background-color: var(--background-light);
+    color: var(--text-dark);
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: var(--text-dark);
+    border: none;
+    padding: 18px;
+    font-size: 1.4rem;
+    border-radius: 12px;
+    width: 100%;
+    cursor: pointer;
+    transition: var(--transition-all);
+}
+
+button:hover {
+    background-color: var(--primary-hover-color);
+}
+
+.result {
+    margin-top: 25px;
+    padding: 18px;
+    font-size: 1.4rem;
+    background-color: var(--background-light);
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>45 Dias Úteis Retroativos</h1>
+    <label for="endDate">Data Final:</label>
+    <input type="date" id="endDate">
+
+    <button onclick="calcular()">Calcular</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+function calcular() {
+    const endDateInput = document.getElementById('endDate').value;
+    const resultEl = document.getElementById('result');
+
+    if (!endDateInput) {
+        resultEl.textContent = "Por favor, selecione a data final.";
+        return;
+    }
+
+    let currentDate = new Date(endDateInput);
+    let businessDaysCount = 0;
+
+    while (businessDaysCount < 45) {
+        currentDate.setDate(currentDate.getDate() - 1);
+        const day = currentDate.getDay();
+        if (day !== 0 && day !== 6) {
+            businessDaysCount++;
+        }
+    }
+
+    resultEl.textContent = `Data inicial retroativa (45 dias úteis): ${currentDate.toLocaleDateString('pt-BR')}`;
+}
+</script>
+</body>
+</html>
