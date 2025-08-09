@@ -143,26 +143,30 @@ function calcular() {
     resultEl.textContent = `Data inicial retroativa (45 dias úteis): ${currentDate.toLocaleDateString('pt-BR')}`;
 }
 </script>
-    <footer>
-  <p>© <span id="ano"></span>. Todos os direitos reservados.</p>
-</footer>
-
-<style>
-  footer {
-    position: fixed;
-    bottom: 2px;
-    right: 5px;
-    font-size: 0.6rem;
-    color: #777;
-    font-family: Arial, sans-serif;
-    opacity: 0.5;
-    pointer-events: none;
-  }
-</style>
-
-<script>
-  document.getElementById('ano').textContent = new Date().getFullYear();
-</script>
-
 </body>
 </html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rodapé Profissional Pequeno</title>
+  <style>
+    footer {
+      position: fixed;
+      bottom: 8px;
+      right: 12px;
+      font-size: 9px;            /* fonte menor */
+      color: #888888;
+      background-color: transparent;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      opacity: 0.75;
+      user-select: none;
+      text-shadow: 0 0 1px rgba(0,0,0,0.1);
+      letter-spacing: 0.02em;
+    }
+  </style>
+</head>
+<body>
+
+  <footer>
+    © 2025.Todos os direitos reservados.
+  </footer>
