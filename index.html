@@ -24,11 +24,11 @@ body {
     background-color: var(--background-light);
     font-family: 'Inter', sans-serif;
     margin: 0;
-    padding-top: 60px; /* espaçamento inicial */
+    padding-top: 60px; /* espaço do topo */
     display: flex;
     justify-content: center;
     align-items: flex-start; /* mais para cima */
-    min-height: 100vh;
+    height: 100vh;
     box-sizing: border-box;
     color: var(--text-dark);
 }
@@ -39,7 +39,7 @@ body {
     border-radius: 18px;
     box-shadow: var(--shadow-light);
     max-width: 550px;
-    width: 90%;
+    width: 100%;
     text-align: center;
 }
 
@@ -106,34 +106,6 @@ button:hover {
     border-radius: 12px;
     border: 1px solid var(--border-light);
 }
-
-footer {
-    position: fixed;
-    bottom: 8px;
-    right: 12px;
-    font-size: 9px;
-    color: #888888;
-    background-color: transparent;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    opacity: 0.75;
-    user-select: none;
-    text-shadow: 0 0 1px rgba(0,0,0,0.1);
-    letter-spacing: 0.02em;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    body {
-        padding-top: 30px; /* menos espaço no topo no celular */
-    }
-    h1 {
-        font-size: 1.8rem;
-    }
-    input, button {
-        font-size: 1.1rem;
-        padding: 14px;
-    }
-}
 </style>
 </head>
 <body>
@@ -142,16 +114,84 @@ footer {
     <label for="endDate">Data Final:</label>
     <input type="date" id="endDate">
 
-    <button onclick="calcular()">Calcular</button>
+    <button type="button" onclick="calcular()">Calcular</button>
 
     <div class="result" id="result"></div>
 </div>
 
-<footer>
-    © 2025. Todos os direitos reservados.
-</footer>
-
 <script>
+function parseDateFromInput(value) {
+    if (!value) return null;
+    const parts = value.split('-');
+    if (parts.length !== 3) return null;
+    const [y, m, d] = parts.map(Number);
+    if (!y || !m || !d) return null;
+    return new Date(y, m - 1, d);
+}
+
 function calcular() {
     const endDateInput = document.getElementById('endDate').value;
     const resultEl = document.getElementById('result');
+
+    if (!endDateInput) {
+        resultEl.textContent = "Por favor, selecione a data final.";
+        return;
+    }
+
+    let currentDate = parseDateFromInput(endDateInput);
+    if (!currentDate || isNaN(currentDate.getTime())) {
+        resultEl.textContent = "Data inválida.";
+        return;
+    }
+
+    let businessDaysCount = 0;
+    let safety = 0;
+    const SAFETY_LIMIT = 10000;
+
+    while (businessDaysCount < 45 && safety < SAFETY_LIMIT) {
+        currentDate.setDate(currentDate.getDate() - 1);
+        const day = currentDate.getDay();
+        if (day !== 0 && day !== 6) {
+            businessDaysCount++;
+        }
+        safety++;
+    }
+
+    if (safety >= SAFETY_LIMIT) {
+        resultEl.textContent = "Erro ao calcular — limite de iterações atingido.";
+        return;
+    }
+
+    resultEl.textContent = `Data inicial retroativa (45 dias úteis): ${currentDate.toLocaleDateString('pt-BR')}`;
+}
+</script>
+</body>
+</html>
+
+<!-- Rodapé -->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rodapé Profissional Pequeno</title>
+  <style>
+    footer {
+      position: fixed;
+      bottom: 8px;
+      right: 12px;
+      font-size: 9px;
+      color: #888888;
+      background-color: transparent;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      opacity: 0.75;
+      user-select: none;
+      text-shadow: 0 0 1px rgba(0,0,0,0.1);
+      letter-spacing: 0.02em;
+    }
+  </style>
+</head>
+<body>
+  <footer>
+    © 2025.Todos os direitos reservados.
+  </footer>
+</body>
+</html>
