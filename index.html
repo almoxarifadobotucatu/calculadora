@@ -24,11 +24,11 @@ body {
     background-color: var(--background-light);
     font-family: 'Inter', sans-serif;
     margin: 0;
-    padding: 0;
+    padding-top: 60px; /* espaçamento inicial */
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start; /* mais para cima */
+    min-height: 100vh;
     box-sizing: border-box;
     color: var(--text-dark);
 }
@@ -39,7 +39,7 @@ body {
     border-radius: 18px;
     box-shadow: var(--shadow-light);
     max-width: 550px;
-    width: 100%;
+    width: 90%;
     text-align: center;
 }
 
@@ -106,6 +106,34 @@ button:hover {
     border-radius: 12px;
     border: 1px solid var(--border-light);
 }
+
+footer {
+    position: fixed;
+    bottom: 8px;
+    right: 12px;
+    font-size: 9px;
+    color: #888888;
+    background-color: transparent;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    opacity: 0.75;
+    user-select: none;
+    text-shadow: 0 0 1px rgba(0,0,0,0.1);
+    letter-spacing: 0.02em;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    body {
+        padding-top: 30px; /* menos espaço no topo no celular */
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+    input, button {
+        font-size: 1.1rem;
+        padding: 14px;
+    }
+}
 </style>
 </head>
 <body>
@@ -119,54 +147,11 @@ button:hover {
     <div class="result" id="result"></div>
 </div>
 
+<footer>
+    © 2025. Todos os direitos reservados.
+</footer>
+
 <script>
 function calcular() {
     const endDateInput = document.getElementById('endDate').value;
     const resultEl = document.getElementById('result');
-
-    if (!endDateInput) {
-        resultEl.textContent = "Por favor, selecione a data final.";
-        return;
-    }
-
-    let currentDate = new Date(endDateInput);
-    let businessDaysCount = 0;
-
-    while (businessDaysCount < 45) {
-        currentDate.setDate(currentDate.getDate() - 1);
-        const day = currentDate.getDay();
-        if (day !== 0 && day !== 6) {
-            businessDaysCount++;
-        }
-    }
-
-    resultEl.textContent = `Data inicial retroativa (45 dias úteis): ${currentDate.toLocaleDateString('pt-BR')}`;
-}
-</script>
-</body>
-</html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <title>Rodapé Profissional Pequeno</title>
-  <style>
-    footer {
-      position: fixed;
-      bottom: 8px;
-      right: 12px;
-      font-size: 9px;            /* fonte menor */
-      color: #888888;
-      background-color: transparent;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      opacity: 0.75;
-      user-select: none;
-      text-shadow: 0 0 1px rgba(0,0,0,0.1);
-      letter-spacing: 0.02em;
-    }
-  </style>
-</head>
-<body>
-
-  <footer>
-    © 2025.Todos os direitos reservados.
-  </footer>
